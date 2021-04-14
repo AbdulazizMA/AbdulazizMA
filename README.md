@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @AbdulazizMA
 - 👀 I’m interested in fintech, machine learning, and software development.
-- 🌱 I’m currently learning HTML, CSS, JAVASCRIPT, and python.
+- 🌱 I’m currently learning HTML, CSS, JAVASCRIPT, and PYTHON.
 - 💞️ I’m looking to collaborate on any projects realted to finance.
 - 📫 You can reach me @Aziz_Hussle on twitter. 
 
