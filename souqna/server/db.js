@@ -1,6 +1,12 @@
 'use strict';
 
-const { DatabaseSync } = require('node:sqlite');
+let DatabaseSync;
+try {
+  ({ DatabaseSync } = require('node:sqlite'));
+} catch {
+  console.error(`\nSouqna needs Node.js 22.5 or newer (you have ${process.version}).\nDownload the LTS version from https://nodejs.org and try again.\n`);
+  process.exit(1);
+}
 
 const SCHEMA = `
 PRAGMA journal_mode = WAL;

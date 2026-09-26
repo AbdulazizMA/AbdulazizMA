@@ -6,8 +6,8 @@
   "type": "commonjs",
   "engines": { "node": ">=22.13" },
   "scripts": {
-    "start": "node --no-warnings server/index.js",
-    "seed": "node --no-warnings server/seed.js",
-    "test": "node --no-warnings --test test/*.test.js"
+    "start": "node --experimental-sqlite --no-warnings server/index.js",
+    "seed": "node --experimental-sqlite --no-warnings server/seed.js",
+    "test": "node --experimental-sqlite --no-warnings --test test/*.test.js"
   }
 }
