@@ -7,9 +7,16 @@ See [STRATEGY.md](STRATEGY.md) for the plan to win market share.
 in-app chat with structured offers and scam-pattern warnings · reviews only from real completed orders ·
 structured filters with Arabic-aware search · free posting, no sale commission.
 
+## Live demo
+
+**https://claude.ai/artifact/DT9xdqkYS9vE97JMFk4HKp** — the full app running inside your browser (use the
+"Try as buyer / seller" buttons to walk through chat → offer → escrow → review). Each visitor gets a private copy
+seeded with demo ads. Rebuild it with `npm install && npm run build:demo` (writes `dist/souqna-demo.html`), which
+bundles the same `server/api.js` with SQLite compiled to JavaScript (sql.js).
+
 ## Run it
 
-Requires Node.js ≥ 22.13 (uses the built-in `node:sqlite`). There's nothing to install.
+Requires Node.js ≥ 22.5 (uses the built-in `node:sqlite`). The server has no dependencies to install.
 
 ```bash
 cd souqna
@@ -24,13 +31,15 @@ Environment: `PORT` (default 3000) and `DATA_DIR` (default `./data`, which holds
 
 ```
 server/
-  app.js       HTTP server, routing, all API endpoints
+  api.js       all API endpoints, transport-neutral (used by the server and the browser demo)
+  app.js       Node HTTP server: static files, uploads, cookies, CSRF guard
   db.js        schema, Arabic normalization, full-text index
   catalog.js   categories (with structured attribute schemas) and cities
   trust.js     password hashing, phone/ID validation, scam detection, escrow fee
   pricing.js   fair-price insight from comparable listings
   seed.js      demo data
 public/        bilingual RTL single-page app (vanilla JS, no build step)
+scripts/       build-demo.js — single-file in-browser demo build
 test/          API + unit tests (node:test)
 ```
 

@@ -2,7 +2,11 @@
 
 (() => {
   // ---------- state ----------
-  const state = { lang: localStorage.getItem('lang') || 'ar', meta: null, me: null, unread: 0 };
+  const store = {
+    get: (k) => { try { return localStorage.getItem(k); } catch { return null; } },
+    set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* storage unavailable */ } },
+  };
+  const state = { lang: store.get('lang') || 'ar', meta: null, me: null, unread: 0 };
   const $ = (sel) => document.querySelector(sel);
   const view = $('#view');
 
@@ -47,8 +51,24 @@
     toast.timer = setTimeout(() => { el.hidden = true; }, 3000);
   }
 
+  // In-page confirmation step (native browser dialogs are blocked in some embedded viewers).
+  function ask(title, detail) {
+    return new Promise((resolve) => {
+      const done = (v) => { overlay.remove(); resolve(v); };
+      const overlay = h('div', { class: 'overlay', onclick: (e) => { if (e.target === overlay) done(false); } },
+        h('div', { class: 'dialog panel', role: 'dialog', 'aria-modal': 'true' },
+          h('h2', {}, title), detail ? h('p', { class: 'meta' }, detail) : null,
+          h('div', { class: 'actions' },
+            h('button', { class: 'btn btn-safe', onclick: () => done(true) }, t('confirm_yes')),
+            h('button', { class: 'btn', onclick: () => done(false) }, t('confirm_no')))));
+      document.body.append(overlay);
+      overlay.querySelector('.btn-safe').focus();
+    });
+  }
+
   async function api(method, url, body) {
-    const res = await fetch(url, {
+    // The in-browser demo build supplies window.souqnaFetch; the real app talks to the server.
+    const res = await (window.souqnaFetch || fetch)(url, {
       method,
       headers: body !== undefined || method !== 'GET' ? { 'content-type': 'application/json' } : {},
       body: body !== undefined ? JSON.stringify(body) : method !== 'GET' ? '{}' : undefined,
@@ -76,7 +96,7 @@
     const links = state.me
       ? [h('a', { href: '#/post', class: 'btn btn-primary' }, '+ ', t('post')), h('a', { href: '#/inbox' }, t('inbox'), badge), h('a', { href: '#/account' }, t('account'))]
       : [h('a', { href: '#/post', class: 'btn btn-primary' }, '+ ', t('post')), h('a', { href: '#/login' }, t('login'))];
-    const langBtn = h('button', { class: 'link', onclick: () => { state.lang = state.lang === 'ar' ? 'en' : 'ar'; localStorage.setItem('lang', state.lang); applyLang(); renderNav(); route(); } }, t('lang'));
+    const langBtn = h('button', { class: 'link', onclick: () => { state.lang = state.lang === 'ar' ? 'en' : 'ar'; store.set('lang', state.lang); applyLang(); renderNav(); route(); } }, t('lang'));
     $('#nav').replaceChildren(...links, langBtn);
     $('#tabbar').replaceChildren(
       h('a', { href: '#/' }, '🏠', h('small', {}, t('home'))),
@@ -240,7 +260,7 @@
         }) }, '💬 ', t('chat')),
         l.price ? h('button', { class: 'btn btn-safe', onclick: guard(async () => {
           if (!state.me) { location.hash = '#/login'; return; }
-          if (!confirm(t('confirm_buy', { amount: l.price.toLocaleString() }) + '\n\n' + t('escrow_explain'))) return;
+          if (!(await ask(t('confirm_buy', { amount: l.price.toLocaleString() }), t('escrow_explain')))) return;
           await api('POST', `/api/listings/${l.id}/orders`);
           location.hash = '#/account/orders';
         }) }, '🛡️ ', t('buy_safe')) : null,
@@ -453,7 +473,7 @@
           h('button', { class: 'btn btn-safe', onclick: guard(async () => { await api('POST', `/api/messages/${m.id}/offer`, { action: 'accept' }); route(); }) }, t('accept')),
           h('button', { class: 'btn', onclick: guard(async () => { await api('POST', `/api/messages/${m.id}/offer`, { action: 'reject' }); route(); }) }, t('reject'))) : null,
         c.role === 'buyer' && m.offer_status === 'accepted' && c.listing.status === 'active' ? h('button', { class: 'btn btn-safe', onclick: guard(async () => {
-          if (!confirm(t('confirm_buy', { amount: m.offer_amount.toLocaleString() }) + '\n\n' + t('escrow_explain'))) return;
+          if (!(await ask(t('confirm_buy', { amount: m.offer_amount.toLocaleString() }), t('escrow_explain')))) return;
           await api('POST', `/api/listings/${c.listing.id}/orders`);
           location.hash = '#/account/orders';
         }) }, '🛡️ ', t('buy_safe')) : null) : null,
@@ -522,6 +542,8 @@
     location.hash = `#/search?${new URLSearchParams(q ? { q } : {})}`;
   });
   window.addEventListener('hashchange', route);
+  // Lets the demo build re-render after switching the signed-in account.
+  window.souqnaRefresh = async () => { await refreshMe(); await route(); };
 
   (async () => {
     applyLang();

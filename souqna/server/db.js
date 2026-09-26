@@ -1,12 +1,5 @@
 'use strict';
 
-let DatabaseSync;
-try {
-  ({ DatabaseSync } = require('node:sqlite'));
-} catch {
-  console.error(`\nSouqna needs Node.js 22.5 or newer (you have ${process.version}).\nDownload the LTS version from https://nodejs.org and try again.\n`);
-  process.exit(1);
-}
 
 const SCHEMA = `
 PRAGMA journal_mode = WAL;
@@ -47,7 +40,6 @@ CREATE TABLE IF NOT EXISTS listings (
 CREATE INDEX IF NOT EXISTS idx_listings_browse ON listings(status, category, city, created_at);
 CREATE INDEX IF NOT EXISTS idx_listings_user ON listings(user_id);
 
-CREATE VIRTUAL TABLE IF NOT EXISTS listings_fts USING fts5(text, tokenize = 'unicode61 remove_diacritics 2');
 
 CREATE TABLE IF NOT EXISTS uploads (
   id TEXT PRIMARY KEY,
@@ -127,9 +119,40 @@ CREATE TABLE IF NOT EXISTS saved_searches (
 `;
 
 function openDb(file) {
+  let DatabaseSync;
+  try {
+    ({ DatabaseSync } = require('node:sqlite'));
+  } catch {
+    console.error(`\nSouqna needs Node.js 22.5 or newer (you have ${process.version}).\nDownload the LTS version from https://nodejs.org and try again.\n`);
+    process.exit(1);
+  }
   const db = new DatabaseSync(file);
-  db.exec(SCHEMA);
+  initSchema(db);
   return db;
+}
+
+// Works with any object exposing exec() and prepare().run/get/all (node:sqlite, or the browser adapter).
+// SQLite builds without FTS5 (e.g. sql.js) get a plain table and substring matching instead.
+const noFts = new WeakSet();
+function initSchema(db) {
+  db.exec(SCHEMA);
+  try {
+    db.exec("CREATE VIRTUAL TABLE IF NOT EXISTS listings_fts USING fts5(text, tokenize = 'unicode61 remove_diacritics 2')");
+  } catch {
+    db.exec('CREATE TABLE IF NOT EXISTS listings_fts (rowid INTEGER PRIMARY KEY, text TEXT NOT NULL)');
+    noFts.add(db);
+  }
+}
+
+// Returns the JOIN/WHERE fragments for a free-text query, or null if it has no searchable tokens.
+function textSearch(db, q) {
+  const tokens = (normalizeArabic(q).match(/[\p{L}\p{N}]+/gu) || []).slice(0, 8);
+  if (!tokens.length) return null;
+  const join = ' JOIN listings_fts f ON f.rowid = l.id';
+  if (noFts.has(db)) {
+    return { join, where: tokens.map(() => 'f.text LIKE ?').join(' AND '), args: tokens.map((t) => `%${t}%`) };
+  }
+  return { join, where: 'listings_fts MATCH ?', args: [tokens.map((t) => `"${t}"*`).join(' ')] };
 }
 
 // Arabic-aware normalization so "سياره" finds "سيارة", "احمد" finds "أحمد", etc.
@@ -147,15 +170,14 @@ function normalizeArabic(s) {
 
 function indexListing(db, listing) {
   const attrs = typeof listing.attrs === 'string' ? JSON.parse(listing.attrs) : listing.attrs;
-  const text = normalizeArabic([listing.title, listing.description, ...Object.values(attrs || {})].join(' '));
+  const base = normalizeArabic([listing.title, listing.description, ...Object.values(attrs || {})].join(' '));
+  // Also index words without the definite article / attached prepositions, so "سياره" finds "السيارة" and "بالسيارة".
+  const stripped = (base.match(/[\p{L}\p{N}]+/gu) || [])
+    .map((w) => w.replace(/^(?:وال|بال|فال|كال|لل|ال)(?=\p{L}{2})/u, ''))
+    .filter((w, i, all) => w && all.indexOf(w) === i);
+  const text = `${base} ${stripped.join(' ')}`;
   db.prepare('DELETE FROM listings_fts WHERE rowid = ?').run(listing.id);
   db.prepare('INSERT INTO listings_fts (rowid, text) VALUES (?, ?)').run(listing.id, text);
 }
 
-// Turns free text into a safe FTS5 prefix query: each token quoted, AND-ed.
-function ftsQuery(q) {
-  const tokens = normalizeArabic(q).match(/[\p{L}\p{N}]+/gu) || [];
-  return tokens.slice(0, 8).map((t) => `"${t}"*`).join(' ');
-}
-
-module.exports = { openDb, normalizeArabic, indexListing, ftsQuery };
+module.exports = { openDb, initSchema, normalizeArabic, indexListing, textSearch };

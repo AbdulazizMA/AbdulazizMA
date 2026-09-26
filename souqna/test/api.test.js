@@ -78,6 +78,11 @@ test('full marketplace flow: list, search, chat, offer, escrow, review', async (
   // Arabic-normalized search: "سياره" (ه) should match "سيارة" description
   r = await buyer('GET', '/api/listings?q=' + encodeURIComponent('سياره نظيفه'));
   assert.equal(r.body.total, 4);
+  // Definite article: "سيارة" in the query must match "السيارة" in a description
+  r = await seller('POST', '/api/listings', { ...camry(95000, 2019), description: 'السيارة بحالة الوكالة' });
+  r = await buyer('GET', '/api/listings?q=' + encodeURIComponent('سيارة الوكاله'));
+  assert.equal(r.body.total, 1);
+  await seller('PATCH', `/api/listings/${r.body.items[0].id}`, { status: 'removed' });
   r = await buyer('GET', '/api/listings?category=cars&attr.year_min=2022');
   assert.equal(r.body.total, 1);
   r = await buyer('GET', '/api/listings?sort=price_asc');

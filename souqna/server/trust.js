@@ -1,19 +1,36 @@
 'use strict';
 
-const crypto = require('node:crypto');
+// node:crypto is unavailable in the in-browser demo build; that build falls back to a non-secret hash
+// (its data never leaves the visitor's own browser). The Node server always uses scrypt.
+const nodeCrypto = (() => { try { return require('node:crypto'); } catch { return null; } })();
+
+function randomHex(bytes) {
+  const buf = new Uint8Array(bytes);
+  globalThis.crypto.getRandomValues(buf);
+  return Array.from(buf, (b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+function demoHash(password, salt) {
+  let h = 2166136261;
+  for (const ch of `${salt}:${password}`) h = Math.imul(h ^ ch.codePointAt(0), 16777619) >>> 0;
+  return h.toString(16);
+}
 
 function hashPassword(password) {
-  const salt = crypto.randomBytes(16);
-  const hash = crypto.scryptSync(password, salt, 64);
-  return `scrypt$${salt.toString('hex')}$${hash.toString('hex')}`;
+  const salt = randomHex(16);
+  if (!nodeCrypto) return `demo$${salt}$${demoHash(password, salt)}`;
+  const hash = nodeCrypto.scryptSync(password, Buffer.from(salt, 'hex'), 64);
+  return `scrypt$${salt}$${hash.toString('hex')}`;
 }
 
 function verifyPassword(password, stored) {
   const [scheme, saltHex, hashHex] = String(stored).split('$');
-  if (scheme !== 'scrypt' || !saltHex || !hashHex) return false;
+  if (!saltHex || !hashHex) return false;
+  if (!nodeCrypto) return scheme === 'demo' && demoHash(password, saltHex) === hashHex;
+  if (scheme !== 'scrypt') return false;
   const expected = Buffer.from(hashHex, 'hex');
-  const actual = crypto.scryptSync(password, Buffer.from(saltHex, 'hex'), expected.length);
-  return crypto.timingSafeEqual(expected, actual);
+  const actual = nodeCrypto.scryptSync(password, Buffer.from(saltHex, 'hex'), expected.length);
+  return nodeCrypto.timingSafeEqual(expected, actual);
 }
 
 // Saudi mobile numbers: 05XXXXXXXX, 5XXXXXXXX, +9665XXXXXXXX, 009665XXXXXXXX → 9665XXXXXXXX
@@ -60,4 +77,4 @@ function escrowFee(amount) {
   return Math.min(250, Math.max(5, Math.round(amount * 0.01)));
 }
 
-module.exports = { hashPassword, verifyPassword, normalizePhone, isValidSaudiId, detectRisk, escrowFee };
+module.exports = { randomHex, hashPassword, verifyPassword, normalizePhone, isValidSaudiId, detectRisk, escrowFee };
