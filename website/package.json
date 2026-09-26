@@ -1,0 +1,10 @@
+{
+  "name": "realtor-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "images": "node tools/render-images.mjs",
+    "dev": "node build.mjs && npx --yes serve dist -l 4321"
+  }
+}
