@@ -71,6 +71,9 @@ const ICONS = {
   arrow: 'M5 12h14M12 5l7 7-7 7',
   star: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z',
 };
+const LOGO_PATH = '<path d="M16 3.5 19.6 8h5.9v5.9L30 17.5l-4.5 3.6v5.9h-5.9L16 31.5 12.4 27H6.5v-5.9L2 17.5l4.5-3.6V8h5.9z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M11 23.5v-7l5-4 5 4v7h-3.4v-4h-3.2v4z" fill="currentColor"/>';
+const LOGO = `<svg class="logo" viewBox="0 0 32 35" aria-hidden="true">${LOGO_PATH}</svg>`;
+const LOGO_LG = `<svg class="logo logo-lg" viewBox="0 0 32 35" aria-hidden="true">${LOGO_PATH}</svg>`;
 const icon = (name, cls = 'ic') =>
   `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="${ICONS[name] || ICONS.clean}"/></svg>`;
 
@@ -110,7 +113,7 @@ const T = {
     groupText: 'Because every apartment is identical, you can book two, three or more units side by side in the same building. Message us on WhatsApp and we will help you coordinate.',
     groupCta: 'Message us on WhatsApp',
     reviewsTitle: 'What our guests say',
-    ratingOn: (v, c, s) => `${v} rating from ${c} reviews on ${s}`,
+    ratingOn: (v, c, s) => `from ${c} reviews on ${s}`,
     faqTitle: 'Frequently asked questions',
     contactTitle: 'Contact us',
     contactLead: 'Questions before you book? We usually reply quickly on WhatsApp.',
@@ -119,6 +122,19 @@ const T = {
     footerNote: 'Bookings and payments are processed by Airbnb and Booking.com. We never ask for payment outside these platforms.',
     rights: 'All rights reserved.',
     lbClose: 'Close', lbPrev: 'Previous photo', lbNext: 'Next photo',
+    introEyebrow: 'Welcome',
+    introTitle: 'Rest well between prayers',
+    introText: 'Our apartments are prepared for pilgrims and their families: quiet bedrooms, a kitchen for home‑cooked meals, and space for everyone to rest after long days at the Haram.',
+    factsFallback: [['copy', 'Identical units', 'same design & furniture'], ['users', 'Families & groups', 'book several side by side'], ['shield', 'Secure booking', 'through Airbnb'], ['key', 'Easy arrival', 'clear check‑in instructions']],
+    showAll: (n) => `Show all ${n} photos`,
+    aptFallback: 'Every apartment is furnished and laid out exactly the same way, so the photos show precisely where you will stay.',
+    sameEvery: 'In every apartment',
+    reviewsKicker: 'Reviews',
+    faqLead: 'Can’t find your answer? Send us a message and we will reply quickly.',
+    ctaTitle: 'Ready for your journey to Makkah?',
+    ctaText: 'Check live prices and availability, and book securely on Airbnb.',
+    footerAbout: 'Clean, fully furnished apartments in Makkah for Umrah and Hajj visitors, families and groups.',
+    explore: 'Explore',
     breadcrumbHome: 'Home',
   },
   ar: {
@@ -155,7 +171,7 @@ const T = {
     groupText: 'لأن جميع الشقق متطابقة، يمكنك حجز شقتين أو ثلاث أو أكثر في نفس العمارة. راسلنا على واتساب وسنساعدك في التنسيق.',
     groupCta: 'راسلنا على واتساب',
     reviewsTitle: 'آراء ضيوفنا',
-    ratingOn: (v, c, s) => `تقييم ${v} من ${c} مراجعة على ${s}`,
+    ratingOn: (v, c, s) => `من ${c} مراجعة على ${s}`,
     faqTitle: 'الأسئلة الشائعة',
     contactTitle: 'تواصل معنا',
     contactLead: 'لديك سؤال قبل الحجز؟ نرد عادةً بسرعة على واتساب.',
@@ -164,6 +180,19 @@ const T = {
     footerNote: 'تتم الحجوزات والمدفوعات عبر Airbnb و Booking.com. لا نطلب أي دفع خارج هذه المنصات.',
     rights: 'جميع الحقوق محفوظة.',
     lbClose: 'إغلاق', lbPrev: 'الصورة السابقة', lbNext: 'الصورة التالية',
+    introEyebrow: 'أهلاً وسهلاً',
+    introTitle: 'راحة تامة بين الصلوات',
+    introText: 'جهّزنا شققنا لضيوف الرحمن وعائلاتهم: غرف نوم هادئة، ومطبخ لتحضير وجبات منزلية، ومساحة تتسع للجميع للراحة بعد يوم طويل في الحرم.',
+    factsFallback: [['copy', 'شقق متطابقة', 'نفس التصميم والأثاث'], ['users', 'للعائلات والمجموعات', 'احجز عدة شقق متجاورة'], ['shield', 'حجز آمن', 'عبر Airbnb'], ['key', 'وصول سهل', 'تعليمات دخول واضحة']],
+    showAll: (n) => `عرض جميع الصور (${n})`,
+    aptFallback: 'جميع الشقق مؤثثة ومقسمة بنفس الطريقة تماماً، فالصور تعرض بالضبط المكان الذي ستقيم فيه.',
+    sameEvery: 'في جميع الشقق',
+    reviewsKicker: 'التقييمات',
+    faqLead: 'لم تجد إجابتك؟ راسلنا وسنرد عليك بسرعة.',
+    ctaTitle: 'مستعد لرحلتك إلى مكة المكرمة؟',
+    ctaText: 'اطّلع على الأسعار والتوفر مباشرة واحجز بأمان عبر Airbnb.',
+    footerAbout: 'شقق مفروشة بالكامل ونظيفة في مكة المكرمة للمعتمرين والحجاج والعائلات والمجموعات.',
+    explore: 'تصفح',
     breadcrumbHome: 'الرئيسية',
   },
 };
@@ -219,13 +248,13 @@ function page(lang) {
     ? `<img src="${B}images/${esc(p.file)}" alt="${esc(p[lang])}" ${i === 0 && cls === 'hero-img' ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" class="${cls}">`
     : `<div class="ph ${cls}" role="img" aria-label="${esc(p[lang])}">${icon('image')}<span>${esc(p[lang])}</span><small>${t.photoSoon}</small></div>`;
 
-  const chips = [
-    g && [icon('users'), `${esc(g)} ${t.guests}`],
-    br && [icon('bed'), `${esc(br)} ${t.bedrooms}`],
-    ba && [icon('bath'), `${esc(ba)} ${t.bathrooms}`],
-    sz && [icon('size'), `${esc(sz)} ${t.sqm}`],
-    distances[0] && [icon('pin'), `${esc(val(distances[0].value, lang))} · ${esc(val(distances[0].place, lang))}`],
+  const facts = [
+    g && ['users', esc(g), t.guests],
+    br && ['bed', esc(br), t.bedrooms],
+    ba && ['bath', esc(ba), t.bathrooms],
+    distances[0] && ['pin', esc(val(distances[0].value, lang)), esc(val(distances[0].place, lang))],
   ].filter(Boolean);
+  if (facts.length < 3) facts.push(...t.factsFallback.slice(0, 4 - facts.length));
 
   const specRows = [
     [t.specs.guests, g], [t.specs.bedrooms, br], [t.specs.beds, beds], [t.specs.bathrooms, ba],
@@ -283,6 +312,7 @@ function page(lang) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.documentElement.classList.add('js')</script>
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(t.desc)}">
   <link rel="canonical" href="${url}">
@@ -290,7 +320,7 @@ function page(lang) {
   <link rel="alternate" hreflang="ar" href="${pageUrl('ar')}">
   <link rel="alternate" hreflang="x-default" href="${pageUrl('en')}">
   <meta name="robots" content="index, follow, max-image-preview:large">
-  <meta name="theme-color" content="#0e5e4e">
+  <meta name="theme-color" content="#0f4c3f">
   ${verify ? `<meta name="google-site-verification" content="${esc(verify)}">` : ''}
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="${esc(brand)}">
@@ -304,15 +334,15 @@ function page(lang) {
   <link rel="icon" href="${B}assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?${lang === 'ar' ? 'family=Amiri:wght@700' : 'family=Fraunces:opsz,wght@9..144,500;9..144,600'}&family=Readex+Pro:wght@300;400;500;600&display=swap">
   <link rel="stylesheet" href="${B}assets/styles.css">
   <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>${ga}
 </head>
-<body>
+<body class="${cover ? 'has-cover' : 'no-cover'}">
   <a class="skip" href="#main">${lang === 'ar' ? 'انتقل إلى المحتوى' : 'Skip to content'}</a>
-  <header class="top">
+  <header class="top" id="top">
     <div class="wrap top-in">
-      <a class="brand" href="./">${icon('pin', 'ic brand-ic')}<span>${esc(brand)}</span></a>
+      <a class="brand" href="./">${LOGO}<span>${esc(brand)}</span></a>
       <nav id="nav" class="nav" aria-label="Main">
         <a href="#gallery">${t.nav.gallery}</a>
         <a href="#apartment">${t.nav.apartment}</a>
@@ -321,130 +351,180 @@ function page(lang) {
         <a href="#contact">${t.nav.contact}</a>
       </nav>
       <a class="lang" href="${otherUrl}" hreflang="${t.other}" lang="${t.other}">${t.otherLabel}</a>
-      <a class="btn btn-sm hide-sm" href="${esc(bookHref)}"${bookAttrs}>${t.bookNow}</a>
+      <a class="btn btn-sm btn-gold hide-sm" href="${esc(bookHref)}"${bookAttrs}>${t.bookNow}</a>
       <button class="menu" aria-controls="nav" aria-expanded="false" aria-label="${t.menu}"><span></span><span></span><span></span></button>
     </div>
   </header>
 
   <main id="main">
     <section class="hero">
-      <div class="wrap hero-grid">
-        <div class="hero-text">
-          <p class="eyebrow">${t.eyebrow}</p>
-          <h1>${t.h1}</h1>
-          <p class="lead">${t.heroSub}</p>
-          <div class="cta-row">
-            <a class="btn btn-lg" href="${esc(bookHref)}"${bookAttrs}>${t.ctaAirbnb}</a>
-            <a class="btn btn-lg btn-ghost" href="#gallery">${t.ctaPhotos}</a>
+      ${cover ? `<img class="hero-bg" src="${B}images/${esc(cover.file)}" alt="${esc(cover[lang])}" fetchpriority="high" decoding="async">` : ''}
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="wrap hero-in">
+        <p class="eyebrow">${t.eyebrow}</p>
+        <h1>${t.h1}</h1>
+        <p class="hero-sub">${t.heroSub}</p>
+        <div class="cta-row">
+          <a class="btn btn-lg btn-gold" href="${esc(bookHref)}"${bookAttrs}>${t.ctaAirbnb}${icon('arrow', 'ic flip')}</a>
+          <a class="btn btn-lg btn-glass" href="#gallery">${icon('image')}${t.ctaPhotos}</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <ul class="facts reveal">
+        ${facts.map(([i, big, small]) => `<li>${icon(i, 'ic fact-ic')}<div><strong>${big}</strong>${small ? `<span>${small}</span>` : ''}</div></li>`).join('\n        ')}
+      </ul>
+    </div>
+
+    <section class="section intro" aria-labelledby="why-h">
+      <div class="wrap intro-grid">
+        <div class="reveal">
+          <p class="kicker">${t.introEyebrow}</p>
+          <h2 id="why-h" class="display">${t.introTitle}</h2>
+          <p class="lead">${t.introText}</p>
+        </div>
+        <div class="features">
+          ${t.why.map(([i, h, p]) => `<div class="feature reveal"><span class="badge">${icon(i)}</span><h3>${h}</h3><p>${p}</p></div>`).join('\n          ')}
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="section sand" aria-labelledby="gallery-h">
+      <div class="wrap">
+        <div class="head reveal">
+          <div>
+            <p class="kicker">${t.nav.gallery}</p>
+            <h2 id="gallery-h" class="display">${t.galleryTitle}</h2>
           </div>
-          ${chips.length ? `<ul class="chips">${chips.map(([i, s]) => `<li>${i}${s}</li>`).join('')}</ul>` : ''}
+          <p class="lead">${t.galleryLead}</p>
         </div>
-        <div class="hero-media">
-          <button class="hero-open" data-open="0" aria-label="${t.ctaPhotos}">${photoEl(cover || photos[0], 0, 'hero-img')}</button>
-        </div>
-      </div>
-    </section>
-
-    <section class="section why" aria-labelledby="why-h">
-      <div class="wrap">
-        <h2 id="why-h">${t.whyTitle}</h2>
-        <div class="cards">
-          ${t.why.map(([i, h, p]) => `<div class="card">${icon(i, 'ic ic-lg')}<h3>${h}</h3><p>${p}</p></div>`).join('\n          ')}
-        </div>
-      </div>
-    </section>
-
-    <section id="gallery" class="section alt" aria-labelledby="gallery-h">
-      <div class="wrap">
-        <h2 id="gallery-h">${t.galleryTitle}</h2>
-        <p class="lead">${t.galleryLead}</p>
-        <ul class="gallery">
+        <ul class="gallery reveal">
           ${photos.map((p, i) => `<li><button data-open="${i}" aria-label="${esc(p[lang])}">${photoEl(p, i)}</button></li>`).join('\n          ')}
         </ul>
+        <button class="btn btn-outline show-all" data-open="0">${icon('image')}${t.showAll(photos.length)}</button>
       </div>
     </section>
 
     <section id="apartment" class="section" aria-labelledby="apt-h">
       <div class="wrap two">
-        <div>
-          <h2 id="apt-h">${t.aptTitle}</h2>
-          ${val(apt.layout, lang) ? `<p class="lead">${esc(val(apt.layout, lang))}</p>` : ''}
+        <div class="reveal">
+          <p class="kicker">${t.nav.apartment}</p>
+          <h2 id="apt-h" class="display">${t.aptTitle}</h2>
+          ${val(apt.layout, lang) ? `<p class="lead">${esc(val(apt.layout, lang))}</p>` : `<p class="lead">${t.aptFallback}</p>`}
           ${specRows.length ? `<dl class="specs">${specRows.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>` : ''}
         </div>
-        <div>
-          <h3>${t.amenitiesTitle}</h3>
+        <div class="amen-card reveal">
+          <div class="amen-head"><h3>${t.amenitiesTitle}</h3><span class="pill">${icon('copy')}${t.sameEvery}</span></div>
           <ul class="amenities">
-            ${cfg.amenities.map((a) => `<li>${icon(a.icon)}${esc(a[lang])}</li>`).join('\n            ')}
+            ${cfg.amenities.map((a) => `<li><span class="badge sm">${icon(a.icon)}</span>${esc(a[lang])}</li>`).join('\n            ')}
           </ul>
         </div>
       </div>
     </section>
 
-    <section class="section group" aria-labelledby="group-h">
-      <div class="wrap group-in">
-        ${icon('users', 'ic ic-xl')}
+    <section class="section band pattern" aria-labelledby="group-h">
+      <div class="wrap band-in reveal">
+        <span class="band-ic">${icon('users', 'ic')}</span>
         <div>
-          <h2 id="group-h">${t.groupTitle}</h2>
+          <h2 id="group-h" class="display">${t.groupTitle}</h2>
           <p>${t.groupText}</p>
         </div>
-        ${waLink ? `<a class="btn btn-light" href="${esc(waLink)}" target="_blank" rel="noopener" data-track="whatsapp">${icon('chat')}${t.groupCta}</a>` : ''}
+        ${waLink ? `<a class="btn btn-lg btn-gold" href="${esc(waLink)}" target="_blank" rel="noopener" data-track="whatsapp">${icon('chat')}${t.groupCta}</a>` : `<a class="btn btn-lg btn-gold" href="${esc(bookHref)}"${bookAttrs}>${t.ctaAirbnb}</a>`}
       </div>
     </section>
 
     <section id="location" class="section" aria-labelledby="loc-h">
       <div class="wrap two">
-        <div>
-          <h2 id="loc-h">${t.locTitle}</h2>
+        <div class="reveal">
+          <p class="kicker">${t.nav.location}</p>
+          <h2 id="loc-h" class="display">${t.locTitle}</h2>
           <p class="lead">${esc(t.locLead(hood))}</p>
-          ${distances.length ? `<ul class="distances">${distances.map((d) => `<li>${icon('pin')}<span>${esc(val(d.place, lang))}</span><strong>${esc(val(d.value, lang))}</strong></li>`).join('')}</ul>` : ''}
-          ${mapsLink ? `<a class="btn btn-ghost" href="${esc(mapsLink)}" target="_blank" rel="noopener">${icon('pin')}${t.openMaps}</a>` : ''}
+          ${distances.length ? `<ul class="distances">${distances.map((d) => `<li><span class="place">${esc(val(d.place, lang))}</span><span class="dots" aria-hidden="true"></span><strong>${esc(val(d.value, lang))}</strong></li>`).join('')}</ul>` : ''}
+          ${mapsLink ? `<a class="btn btn-outline" href="${esc(mapsLink)}" target="_blank" rel="noopener">${icon('pin')}${t.openMaps}</a>` : ''}
         </div>
-        ${hasGeo ? `<div class="map"><iframe title="${t.mapTitle}" src="https://maps.google.com/maps?q=${lat},${lng}&z=15&hl=${lang}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>` : ''}
+        ${hasGeo
+          ? `<div class="map reveal"><iframe title="${t.mapTitle}" src="https://maps.google.com/maps?q=${lat},${lng}&z=15&hl=${lang}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>`
+          : `<div class="map map-ph pattern reveal" aria-hidden="true">${icon('pin', 'ic')}<strong>${lang === 'ar' ? 'مكة المكرمة' : 'Makkah Al-Mukarramah'}</strong><span>${lang === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'}</span></div>`}
       </div>
     </section>
 ${reviews.length ? `
-    <section id="reviews" class="section alt" aria-labelledby="rev-h">
+    <section id="reviews" class="section sand" aria-labelledby="rev-h">
       <div class="wrap">
-        <h2 id="rev-h">${t.reviewsTitle}</h2>
-        ${val(rating.value) && val(rating.count) ? `<p class="rating">${icon('star', 'ic star')}${esc(t.ratingOn(val(rating.value), val(rating.count), val(rating.source) || 'Airbnb'))}</p>` : ''}
+        <div class="head reveal">
+          <div><p class="kicker">${t.reviewsKicker}</p><h2 id="rev-h" class="display">${t.reviewsTitle}</h2></div>
+          ${val(rating.value) && val(rating.count) ? `<p class="rating">${icon('star', 'ic star')}<strong>${esc(val(rating.value))}</strong> ${esc(t.ratingOn(val(rating.value), val(rating.count), val(rating.source) || 'Airbnb'))}</p>` : ''}
+        </div>
         <div class="reviews">
-          ${reviews.map((r) => `<figure class="review"><blockquote>${esc(val(r.text, lang) || val(r.text))}</blockquote><figcaption>${esc(val(r.name))}${val(r.date) ? ` · ${esc(val(r.date))}` : ''}${val(r.source) ? ` · ${esc(val(r.source))}` : ''}</figcaption></figure>`).join('\n          ')}
+          ${reviews.map((r) => `<figure class="review reveal"><blockquote>${esc(val(r.text, lang) || val(r.text))}</blockquote><figcaption><strong>${esc(val(r.name))}</strong>${val(r.date) ? ` · ${esc(val(r.date))}` : ''}${val(r.source) ? ` · ${esc(val(r.source))}` : ''}</figcaption></figure>`).join('\n          ')}
         </div>
       </div>
     </section>
 ` : ''}
-    <section id="faq" class="section${reviews.length ? '' : ' alt'}" aria-labelledby="faq-h">
-      <div class="wrap narrow">
-        <h2 id="faq-h">${t.faqTitle}</h2>
-        ${list.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n        ')}
+    <section id="faq" class="section${reviews.length ? '' : ' sand'}" aria-labelledby="faq-h">
+      <div class="wrap faq-grid">
+        <div class="reveal">
+          <p class="kicker">${t.nav.faq}</p>
+          <h2 id="faq-h" class="display">${t.faqTitle}</h2>
+          <p class="lead">${t.faqLead}</p>
+          ${waLink ? `<a class="btn btn-outline" href="${esc(waLink)}" target="_blank" rel="noopener" data-track="whatsapp">${icon('chat')}WhatsApp</a>` : ''}
+        </div>
+        <div class="faq reveal">
+          ${list.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n          ')}
+        </div>
       </div>
     </section>
 
-    <section id="contact" class="section" aria-labelledby="contact-h">
-      <div class="wrap narrow center">
-        <h2 id="contact-h">${t.contactTitle}</h2>
-        <p class="lead">${t.contactLead}</p>
+    <section id="contact" class="cta pattern" aria-labelledby="contact-h">
+      <div class="wrap narrow center reveal">
+        ${LOGO_LG}
+        <h2 id="contact-h" class="display">${t.ctaTitle}</h2>
+        <p class="lead">${t.ctaText}</p>
         <div class="contact">
-          ${waLink ? `<a class="btn btn-lg" href="${esc(waLink)}" target="_blank" rel="noopener" data-track="whatsapp">${icon('chat')}WhatsApp</a>` : ''}
-          ${val(cfg.contact.phone) ? `<a class="btn btn-lg btn-ghost" href="tel:${esc(val(cfg.contact.phone).replace(/\s/g, ''))}" dir="ltr">${icon('phone')}${esc(val(cfg.contact.phone))}</a>` : ''}
-          ${val(cfg.contact.email) ? `<a class="btn btn-lg btn-ghost" href="mailto:${esc(val(cfg.contact.email))}">${icon('mail')}${esc(val(cfg.contact.email))}</a>` : ''}
+          <a class="btn btn-lg btn-gold" href="${esc(bookHref)}"${bookAttrs}>${t.ctaAirbnb}${icon('arrow', 'ic flip')}</a>
+          ${waLink ? `<a class="btn btn-lg btn-glass" href="${esc(waLink)}" target="_blank" rel="noopener" data-track="whatsapp">${icon('chat')}WhatsApp</a>` : ''}
+          ${val(cfg.contact.phone) ? `<a class="btn btn-lg btn-glass" href="tel:${esc(val(cfg.contact.phone).replace(/\s/g, ''))}" dir="ltr">${icon('phone')}${esc(val(cfg.contact.phone))}</a>` : ''}
+          ${val(cfg.contact.email) ? `<a class="btn btn-lg btn-glass" href="mailto:${esc(val(cfg.contact.email))}">${icon('mail')}${esc(val(cfg.contact.email))}</a>` : ''}
         </div>
       </div>
     </section>
   </main>
 
   <footer class="foot">
-    <div class="wrap">
-      <p><strong>${esc(brand)}</strong> · ${lang === 'ar' ? 'مكة المكرمة، المملكة العربية السعودية' : 'Makkah, Saudi Arabia'}</p>
+    <div class="wrap foot-grid">
+      <div>
+        <p class="brand foot-brand">${LOGO}<span>${esc(brand)}</span></p>
+        <p>${t.footerAbout}</p>
+      </div>
+      <div>
+        <h3>${t.explore}</h3>
+        <ul>
+          <li><a href="#gallery">${t.nav.gallery}</a></li>
+          <li><a href="#apartment">${t.nav.apartment}</a></li>
+          <li><a href="#location">${t.nav.location}</a></li>
+          <li><a href="#faq">${t.nav.faq}</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>${t.nav.contact}</h3>
+        <ul>
+          ${firstAirbnb ? `<li><a href="${esc(firstAirbnb)}" target="_blank" rel="noopener">Airbnb</a></li>` : ''}
+          ${waLink ? `<li><a href="${esc(waLink)}" target="_blank" rel="noopener">WhatsApp</a></li>` : ''}
+          ${val(cfg.contact.email) ? `<li><a href="mailto:${esc(val(cfg.contact.email))}">${esc(val(cfg.contact.email))}</a></li>` : ''}
+          <li><a href="${otherUrl}" hreflang="${t.other}" lang="${t.other}">${t.otherLabel}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap foot-base">
       ${val(cfg.tourismLicense) ? `<p>${t.license} <span dir="ltr">${esc(val(cfg.tourismLicense))}</span></p>` : ''}
-      <p class="small">${t.footerNote}</p>
-      <p class="small">© ${year} ${esc(brand)}. ${t.rights} · <a href="${otherUrl}" hreflang="${t.other}" lang="${t.other}">${t.otherLabel}</a></p>
+      <p>${t.footerNote}</p>
+      <p>© ${year} ${esc(brand)}. ${t.rights}</p>
     </div>
   </footer>
 
   <div class="bookbar">
-    <a class="btn" href="${esc(bookHref)}"${bookAttrs}>${t.bookNow}</a>
-    ${waLink ? `<a class="btn btn-ghost" href="${esc(waLink)}" target="_blank" rel="noopener" data-track="whatsapp" aria-label="WhatsApp">${icon('chat')}</a>` : ''}
+    <a class="btn btn-gold" href="${esc(bookHref)}"${bookAttrs}>${t.bookNow}</a>
+    ${waLink ? `<a class="btn btn-outline" href="${esc(waLink)}" target="_blank" rel="noopener" data-track="whatsapp" aria-label="WhatsApp">${icon('chat')}</a>` : ''}
   </div>
 
   <dialog id="lightbox" class="lb" aria-label="${t.galleryTitle}">

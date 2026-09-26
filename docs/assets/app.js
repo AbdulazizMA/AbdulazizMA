@@ -1,16 +1,41 @@
 (function () {
   'use strict';
 
+  var header = document.getElementById('top');
+  var bar = document.querySelector('.bookbar');
+  var hero = document.querySelector('.hero');
+
+  // Solid header after scrolling; mobile booking bar after the hero
+  function onScroll() {
+    var y = window.scrollY;
+    if (header) header.classList.toggle('solid', y > 40);
+    if (bar && hero) bar.classList.toggle('show', y > hero.offsetHeight - 200);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Fade sections in as they scroll into view
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  }
+
   // Mobile menu
   var menu = document.querySelector('.menu');
   var nav = document.getElementById('nav');
   if (menu && nav) {
     menu.addEventListener('click', function () {
       var open = nav.classList.toggle('open');
+      header.classList.toggle('open', open);
       menu.setAttribute('aria-expanded', open);
     });
     nav.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') { nav.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); }
+      if (e.target.tagName === 'A') { nav.classList.remove('open'); header.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); }
     });
   }
 
