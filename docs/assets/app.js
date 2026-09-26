@@ -14,45 +14,6 @@
     });
   }
 
-  // Booking dates -> Airbnb / Booking.com deep links
-  var form = document.getElementById('dates');
-  var links = document.querySelectorAll('a[data-platform]');
-  links.forEach(function (a) { a.dataset.base = a.href; });
-  function iso(d) { return d.toISOString().slice(0, 10); }
-  function updateLinks() {
-    if (!form) return;
-    var ci = form.elements['in'].value, co = form.elements['out'].value, g = form.elements.guests.value;
-    links.forEach(function (a) {
-      var u;
-      try { u = new URL(a.dataset.base); } catch (e) { return; }
-      if (a.dataset.platform === 'airbnb') {
-        if (ci && co) { u.searchParams.set('check_in', ci); u.searchParams.set('check_out', co); }
-        u.searchParams.set('adults', g);
-      } else {
-        if (ci && co) { u.searchParams.set('checkin', ci); u.searchParams.set('checkout', co); }
-        u.searchParams.set('group_adults', g);
-        u.searchParams.set('no_rooms', '1');
-      }
-      a.href = u.toString();
-    });
-  }
-  if (form) {
-    var today = new Date();
-    form.elements['in'].min = iso(today);
-    form.elements['out'].min = iso(new Date(today.getTime() + 864e5));
-    form.addEventListener('change', function (e) {
-      var ci = form.elements['in'], co = form.elements['out'];
-      if (e.target === ci && ci.value) {
-        var next = new Date(ci.value + 'T00:00:00Z');
-        next.setUTCDate(next.getUTCDate() + 1);
-        co.min = iso(next);
-        if (!co.value || co.value <= ci.value) co.value = iso(next);
-      }
-      updateLinks();
-    });
-    updateLinks();
-  }
-
   // Analytics events for outbound booking / WhatsApp clicks (only if GA is configured)
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('[data-track]');

@@ -106,12 +106,6 @@ const T = {
     locLead: (hood) => `Our apartments are in ${hood ? hood + ', ' : ''}Makkah – convenient for reaching Al-Masjid Al-Haram and everything you need during your stay.`,
     openMaps: 'Open in Google Maps',
     mapTitle: 'Map showing the apartments’ location in Makkah',
-    bookTitle: 'Check availability & book',
-    bookLead: 'Choose your dates, then pick any apartment – they are all identical. You will see live prices and availability on Airbnb or Booking.com and pay securely there.',
-    checkIn: 'Check-in', checkOut: 'Check-out', guestsLabel: 'Guests',
-    datesNote: 'Your dates are passed to Airbnb / Booking.com automatically.',
-    onAirbnb: 'Book on Airbnb', onBooking: 'Booking.com', askWa: 'Ask for availability',
-    unitSpec: (g, b) => [g && `${g} guests`, b && `${b} bedrooms`].filter(Boolean).join(' · '),
     groupTitle: 'Travelling with a large family or group?',
     groupText: 'Because every apartment is identical, you can book two, three or more units side by side in the same building. Message us on WhatsApp and we will help you coordinate.',
     groupCta: 'Message us on WhatsApp',
@@ -157,12 +151,6 @@ const T = {
     locLead: (hood) => `تقع شققنا في ${hood ? hood + '، ' : ''}مكة المكرمة، في موقع يسهّل الوصول إلى المسجد الحرام وكل ما تحتاجه خلال إقامتك.`,
     openMaps: 'افتح في خرائط Google',
     mapTitle: 'خريطة توضح موقع الشقق في مكة المكرمة',
-    bookTitle: 'تحقق من التوفر واحجز',
-    bookLead: 'اختر تواريخ إقامتك ثم اختر أي شقة، فجميعها متطابقة. ستشاهد الأسعار والتوفر مباشرة على Airbnb أو Booking.com وتدفع هناك بأمان.',
-    checkIn: 'تاريخ الوصول', checkOut: 'تاريخ المغادرة', guestsLabel: 'عدد الضيوف',
-    datesNote: 'تُنقل التواريخ تلقائياً إلى Airbnb أو Booking.com.',
-    onAirbnb: 'احجز على Airbnb', onBooking: 'Booking.com', askWa: 'اسأل عن التوفر',
-    unitSpec: (g, b) => [g && `${g} ضيوف`, b && `${b} غرف نوم`].filter(Boolean).join(' · '),
     groupTitle: 'مسافر مع عائلة كبيرة أو مجموعة؟',
     groupText: 'لأن جميع الشقق متطابقة، يمكنك حجز شقتين أو ثلاث أو أكثر في نفس العمارة. راسلنا على واتساب وسنساعدك في التنسيق.',
     groupCta: 'راسلنا على واتساب',
@@ -186,7 +174,7 @@ function faqs(lang) {
   const ci = val(apt.checkIn, lang), co = val(apt.checkOut, lang);
   const lic = val(cfg.tourismLicense);
   if (lang === 'ar') return [
-    ['كيف أحجز؟', 'اختر تواريخك وأي شقة في قسم الحجز، ثم اضغط «احجز على Airbnb» أو Booking.com. يتم الحجز والدفع بالكامل عبر المنصة وتصلك رسالة التأكيد فوراً.'],
+    ['كيف أحجز؟', 'اضغط «احجز الآن» لتنتقل إلى صفحتنا على Airbnb، واختر تواريخك وشاهد السعر والتوفر مباشرة. يتم الحجز والدفع بالكامل عبر Airbnb وتصلك رسالة التأكيد فوراً.'],
     ['هل جميع الشقق متشابهة؟', 'نعم. جميع شققنا بنفس التصميم والأثاث والتقسيم، والصور في هذا الموقع تمثل كل شقة.'],
     ['هل يمكنني حجز أكثر من شقة لعائلتي أو مجموعتي؟', 'نعم. احجز كل شقة على حدة عبر Airbnb أو Booking.com، ثم راسلنا على واتساب لنساعدك في التنسيق بين الشقق.'],
     ['كم تبعد الشقق عن المسجد الحرام؟', distVal ? `المسافة إلى المسجد الحرام تقريباً: ${distVal}. تجد تفاصيل أكثر في قسم الموقع.` : 'تجد المسافات إلى المسجد الحرام والأماكن القريبة في قسم الموقع.'],
@@ -197,7 +185,7 @@ function faqs(lang) {
     ...(lic ? [['هل الشقق مرخصة؟', `نعم، الشقق مرخصة من وزارة السياحة السعودية برقم ترخيص ${lic}.`]] : []),
   ];
   return [
-    ['How do I book?', 'Choose your dates and any apartment in the booking section, then tap “Book on Airbnb” or Booking.com. Booking and payment happen entirely on that platform and you receive your confirmation instantly.'],
+    ['How do I book?', 'Tap “Book now” to open our Airbnb listing, choose your dates and see the live price and availability. Booking and payment happen entirely on Airbnb and you receive your confirmation instantly.'],
     ['Are all the apartments the same?', 'Yes. All our apartments have the same design, furniture and layout, so the photos on this website represent every unit.'],
     ['Can I book more than one apartment for my family or group?', 'Yes. Book each apartment on Airbnb or Booking.com, then message us on WhatsApp and we will help you coordinate the units.'],
     ['How far are the apartments from Al-Masjid Al-Haram?', distVal ? `Approximately ${distVal} to Al-Masjid Al-Haram. See the location section for more distances.` : 'See the location section for distances to Al-Masjid Al-Haram and nearby places.'],
@@ -221,6 +209,8 @@ function page(lang) {
   const waLink = wa ? `https://wa.me/${wa}?text=${encodeURIComponent(t.waMsg)}` : '';
   const mapsLink = val(cfg.location.mapsLink) || (hasGeo ? `https://www.google.com/maps/search/?api=1&query=${lat},${lng}` : '');
   const list = faqs(lang);
+  const bookHref = firstAirbnb || '#contact';
+  const bookAttrs = firstAirbnb ? ' target="_blank" rel="noopener" data-track="book_airbnb"' : '';
 
   const g = val(apt.guests), br = val(apt.bedrooms), ba = val(apt.bathrooms), sz = val(apt.sizeSqm), beds = val(apt.beds);
   const distances = cfg.location.distances.filter((d) => val(d.value, lang));
@@ -241,24 +231,6 @@ function page(lang) {
     [t.specs.guests, g], [t.specs.bedrooms, br], [t.specs.beds, beds], [t.specs.bathrooms, ba],
     [t.specs.size, sz && `${sz} ${t.sqm}`], [t.specs.checkIn, val(apt.checkIn, lang)], [t.specs.checkOut, val(apt.checkOut, lang)],
   ].filter((r) => r[1]);
-
-  const maxGuests = Math.max(parseInt(g, 10) || 8, 1);
-
-  const unitCards = units.map((u) => {
-    const name = val(u.name, lang);
-    const btns = [];
-    if (u.airbnb) btns.push(`<a class="btn" href="${esc(u.airbnb)}" target="_blank" rel="noopener" data-platform="airbnb" data-track="book_airbnb" data-unit="${esc(val(u.name, 'en'))}">${t.onAirbnb}</a>`);
-    if (u.booking) btns.push(`<a class="btn btn-ghost" href="${esc(u.booking)}" target="_blank" rel="noopener" data-platform="booking" data-track="book_booking" data-unit="${esc(val(u.name, 'en'))}">${t.onBooking}</a>`);
-    if (!btns.length && waLink) btns.push(`<a class="btn btn-ghost" href="${esc(waLink)}" target="_blank" rel="noopener" data-track="whatsapp">${t.askWa}</a>`);
-    return `<article class="unit">
-        <div class="unit-img">${photoEl(cover || photos[0], 1)}</div>
-        <div class="unit-body">
-          <h3>${esc(name)}</h3>
-          <p class="muted">${esc(t.unitSpec(g, br))}</p>
-          <div class="unit-btns">${btns.join('')}</div>
-        </div>
-      </article>`;
-  }).join('\n      ');
 
   const rating = cfg.rating || {};
   const reviews = (cfg.reviews || []).filter((r) => val(r.text, lang) || val(r.text));
@@ -349,7 +321,7 @@ function page(lang) {
         <a href="#contact">${t.nav.contact}</a>
       </nav>
       <a class="lang" href="${otherUrl}" hreflang="${t.other}" lang="${t.other}">${t.otherLabel}</a>
-      <a class="btn btn-sm hide-sm" href="#book">${t.bookNow}</a>
+      <a class="btn btn-sm hide-sm" href="${esc(bookHref)}"${bookAttrs}>${t.bookNow}</a>
       <button class="menu" aria-controls="nav" aria-expanded="false" aria-label="${t.menu}"><span></span><span></span><span></span></button>
     </div>
   </header>
@@ -362,7 +334,7 @@ function page(lang) {
           <h1>${t.h1}</h1>
           <p class="lead">${t.heroSub}</p>
           <div class="cta-row">
-            <a class="btn btn-lg" href="#book">${t.ctaAirbnb}</a>
+            <a class="btn btn-lg" href="${esc(bookHref)}"${bookAttrs}>${t.ctaAirbnb}</a>
             <a class="btn btn-lg btn-ghost" href="#gallery">${t.ctaPhotos}</a>
           </div>
           ${chips.length ? `<ul class="chips">${chips.map(([i, s]) => `<li>${i}${s}</li>`).join('')}</ul>` : ''}
@@ -404,22 +376,6 @@ function page(lang) {
           <ul class="amenities">
             ${cfg.amenities.map((a) => `<li>${icon(a.icon)}${esc(a[lang])}</li>`).join('\n            ')}
           </ul>
-        </div>
-      </div>
-    </section>
-
-    <section id="book" class="section alt" aria-labelledby="book-h">
-      <div class="wrap">
-        <h2 id="book-h">${t.bookTitle}</h2>
-        <p class="lead">${t.bookLead}</p>
-        <form class="dates" id="dates" onsubmit="return false">
-          <label>${t.checkIn}<input type="date" name="in" required></label>
-          <label>${t.checkOut}<input type="date" name="out" required></label>
-          <label>${t.guestsLabel}<select name="guests">${Array.from({ length: maxGuests }, (_, i) => `<option${i === 1 ? ' selected' : ''}>${i + 1}</option>`).join('')}</select></label>
-          <p class="muted small">${icon('calendar')}${t.datesNote}</p>
-        </form>
-        <div class="units">
-      ${unitCards}
         </div>
       </div>
     </section>
@@ -487,7 +443,7 @@ ${reviews.length ? `
   </footer>
 
   <div class="bookbar">
-    <a class="btn" href="${firstAirbnb ? '#book' : '#contact'}">${t.bookNow}</a>
+    <a class="btn" href="${esc(bookHref)}"${bookAttrs}>${t.bookNow}</a>
     ${waLink ? `<a class="btn btn-ghost" href="${esc(waLink)}" target="_blank" rel="noopener" data-track="whatsapp" aria-label="WhatsApp">${icon('chat')}</a>` : ''}
   </div>
 

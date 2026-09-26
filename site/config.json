@@ -63,9 +63,9 @@
     { "icon": "clean", "en": "Professionally cleaned", "ar": "تنظيف احترافي" }
   ],
 
-  "_unitsHelp": "One entry per apartment. Paste the full Airbnb room link (https://www.airbnb.com/rooms/123456) and Booking.com link. Leave booking empty if a unit is not on Booking.com.",
+  "_unitsHelp": "One entry per apartment: the Airbnb room link (https://www.airbnb.com/rooms/123456, without the ?… part) and optional Booking.com link. All Book now buttons go to the first apartment with an Airbnb link; the others are listed for Google.",
   "units": [
-    { "name": { "en": "Apartment 1", "ar": "الشقة ١" }, "airbnb": "TODO", "booking": "" },
+    { "name": { "en": "Apartment 1", "ar": "الشقة ١" }, "airbnb": "https://www.airbnb.com/rooms/1722871208832211426", "booking": "" },
     { "name": { "en": "Apartment 2", "ar": "الشقة ٢" }, "airbnb": "TODO", "booking": "" },
     { "name": { "en": "Apartment 3", "ar": "الشقة ٣" }, "airbnb": "TODO", "booking": "" },
     { "name": { "en": "Apartment 4", "ar": "الشقة ٤" }, "airbnb": "TODO", "booking": "" }

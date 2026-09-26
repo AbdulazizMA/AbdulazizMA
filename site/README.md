@@ -11,7 +11,7 @@ A fast English + Arabic website that shows your apartment photos and sends guest
 - English page (`/`) and Arabic page (`/ar/`), linked for Google with `hreflang`.
 - Big cover photo, photo gallery with a full-screen viewer (swipe on phones).
 - Apartment details, amenities, location with map and distances.
-- Booking section: the guest picks dates, and every "Book on Airbnb" button opens that apartment on Airbnb with the dates and number of guests already filled in (Booking.com works the same way).
+- "Book now" buttons (top of the page, hero, and the bar at the bottom on phones) open your Airbnb listing directly.
 - A "large family / group" section, since all your apartments are identical and groups can book several side by side.
 - FAQ, WhatsApp/phone/email contact, a booking bar that stays at the bottom on phones, and your tourism license number.
 - SEO: page titles and descriptions for Umrah/Hajj searches, Google structured data (LodgingBusiness + FAQ), sitemap with images, robots.txt, social-share previews.

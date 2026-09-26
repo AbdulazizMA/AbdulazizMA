@@ -115,21 +115,6 @@ button { font: inherit; cursor: pointer; }
 .amenities li { display: flex; align-items: center; gap: 10px; }
 .amenities .ic { color: var(--primary); }
 
-/* booking */
-.dates { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); align-items: end; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; margin: 24px 0; }
-.dates label { display: grid; gap: 6px; font-weight: 500; font-size: .9rem; }
-.dates input, .dates select { font: inherit; min-height: 46px; padding: 8px 12px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--ink); width: 100%; }
-.dates input:focus, .dates select:focus { border-color: var(--primary); outline: none; }
-.dates p { grid-column: 1 / -1; margin: 0; display: flex; align-items: center; gap: 6px; }
-.units { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
-.unit { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
-.unit-img { aspect-ratio: 16 / 10; overflow: hidden; }
-.unit-img img, .unit-img .ph { width: 100%; height: 100%; object-fit: cover; min-height: 0; }
-.unit-body { padding: 16px; display: flex; flex-direction: column; flex: 1; }
-.unit-body h3 { margin-bottom: 2px; }
-.unit-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
-.unit-btns .btn { flex: 1; }
-
 .group { background: var(--primary); color: #fff; }
 .group-in { display: grid; gap: 20px; align-items: center; }
 @media (min-width: 900px) { .group-in { grid-template-columns: auto 1fr auto; gap: 32px; } }
