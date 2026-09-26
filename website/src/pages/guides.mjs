@@ -1,4 +1,4 @@
-import { cfg, url, icon, btn, waBtn, faqBlock, faqSchema, ctaBand, agentId, abs } from "../lib.mjs";
+import { cfg, url, icon, btn, waBtn, faqBlock, faqSchema, ctaBand, agentId, abs, pageHero, kicker, licenseLine, toArDigits, mark } from "../lib.mjs";
 
 // Add a new article = add an object to this array. Keep them genuinely
 // useful: one clear question per article, answered better than anyone else.
@@ -226,7 +226,7 @@ export const GUIDES = [
 <li><strong>كم من وقتك تريد أن تعطي؟</strong> قليل ← فيلا أو أرض. أكثر ← عمارة.</li>
 <li><strong>متى قد تحتاج المال؟</strong> خلال سنتين ← ابتعد عن الأصول بطيئة البيع.</li>
 </ol>
-<p>لست متأكدًا؟ هذا بالضبط ما نحسمه في <a href="${url("/contact/")}">الاستشارة المجانية</a>. واطّلع على <a href="${url("/areas/")}">تحليل الأحياء</a> لترى أين يناسب كل نوع.</p>`,
+<p>لست متأكدًا؟ هذا بالضبط ما نحسمه في <a href="${url("/contact/")}">الاستشارة المجانية</a>. واطّلع على تحليل أحياء <a href="${url("/riyadh/")}">الرياض</a> و<a href="${url("/jeddah/")}">جدة</a> لترى أين يناسب كل نوع.</p>`,
     faq: [
       { q: "ما أفضل استثمار عقاري للمبتدئين في السعودية؟", a: "غالبًا وحدة سكنية (شقة أو دور) في حي بطلب إيجاري ثابت، لأنها أقل ميزانية وأسهل في الإدارة والبيع. لكن الأهم أن يطابق الاستثمار هدفك وسيولتك." },
       { q: "هل الأرض استثمار جيد؟", a: "قد تكون ممتازة لمن يملك أفقًا طويلًا ولا يحتاج دخلًا، بشرط الشراء بسعر صحيح في موقع بنمو حقيقي، مع حساب رسوم الأراضي البيضاء إن انطبقت." },
@@ -235,12 +235,12 @@ export const GUIDES = [
 ];
 
 function guidesIndex() {
-  const title = `أدلة المستثمر العقاري في ${cfg.city.ar}`;
-  const body = `
-<section class="page-hero"><div class="wrap narrow"><h1>${title}</h1><p class="lead">أدلة عملية مكتوبة من الميدان: التكاليف، العائد، الفحص قبل الشراء، واختيار نوع الاستثمار. بدون تعقيد وبدون تسويق.</p></div></section>
-<section class="section"><div class="wrap"><div class="grid grid-2">
+  const title = "أدلة المستثمر العقاري في السعودية";
+  const body = (crumbs) => `
+${pageHero("ar", { crumbs, kicker: "أدلة المستثمر", title, lead: "أدلة عملية مكتوبة من الميدان: التكاليف، العائد، الفحص قبل الشراء، واختيار نوع الاستثمار. بدون تعقيد وبدون تسويق." })}
+<section class="section section-tight"><div class="wrap"><div class="g-grid">
 ${GUIDES.map(
-  (g) => `<a class="card card-link guide-card" href="${url(`/guides/${g.slug}/`)}"><span class="meta">${icon("clock")} ${g.minutes} دقائق قراءة</span><h2 class="h3">${g.title}</h2><p>${g.summary}</p><span class="more">${icon("arrow")}</span></a>`
+  (g, i) => `<a class="g-card${i === 0 ? " g-feature pattern" : ""}" href="${url(`/guides/${g.slug}/`)}" data-reveal><span class="g-meta">${icon("clock")} ${toArDigits(g.minutes)} دقائق قراءة</span><h2 class="h3">${g.title}</h2><p>${g.summary}</p><span class="d-go">${icon("arrow")}</span></a>`
 ).join("")}
 </div></div></section>
 ${ctaBand("ar")}`;
@@ -267,27 +267,37 @@ ${ctaBand("ar")}`;
 function guidePage(g) {
   const others = GUIDES.filter((x) => x.slug !== g.slug);
   const author = cfg.name.ar;
-  const body = `
+  const date = new Date(g.date).toLocaleDateString("ar-SA-u-ca-gregory", { year: "numeric", month: "long", day: "numeric" });
+  const body = (crumbs) => `
 <article>
-  <header class="page-hero article-hero">
-    <div class="wrap narrow">
-      <h1>${g.title}</h1>
-      <p class="lead">${g.summary}</p>
-      <p class="byline">${icon("shield")} <span>بقلم <a href="${url("/about/")}" rel="author">${author}</a> — وسيط عقاري مرخّص (فال ${cfg.falLicense})</span> · <time datetime="${g.date}">${new Date(g.date).toLocaleDateString("ar-SA-u-ca-gregory", { year: "numeric", month: "long", day: "numeric" })}</time> · ${g.minutes} دقائق قراءة</p>
-    </div>
-  </header>
+  ${pageHero("ar", {
+    crumbs,
+    kicker: "دليل المستثمر",
+    title: g.title,
+    lead: g.summary,
+    actions: `<p class="byline">${mark(34)}<span><a href="${url("/about/")}" rel="author">${author}</a><small>${licenseLine("ar")} · <time datetime="${g.date}">${date}</time> · ${toArDigits(g.minutes)} دقائق قراءة</small></span></p>`,
+  })}
   <div class="section section-tight">
-    <div class="wrap narrow prose">
-      ${g.body}
-      ${g.faq ? `<h2>أسئلة شائعة</h2>${faqBlock(g.faq)}` : ""}
+    <div class="wrap article-grid">
+      <div class="prose">
+        ${g.body}
+        ${g.faq ? `<h2>أسئلة شائعة</h2>${faqBlock(g.faq)}` : ""}
+      </div>
+      <aside class="sidebar">
+        <div class="side-card">
+          <h2 class="h3">تريد رأيًا في عقار محدد؟</h2>
+          <p>أرسل لي تفاصيله، وأراجع السعر والعائد والمخاطر مقابل صفقات فعلية في نفس الحي.</p>
+          ${waBtn("ar", "السلام عليكم، قرأت دليلك وعندي عقار أبغى رأيك فيه.", "راجع عقارك معي", "btn-wa btn-block")}
+        </div>
+      </aside>
     </div>
   </div>
 </article>
-<section class="section section-alt">
+<section class="section section-sand">
   <div class="wrap">
-    <h2 class="section-title">اقرأ أيضًا</h2>
-    <div class="grid grid-3">${others
-      .map((o) => `<a class="card card-link guide-card" href="${url(`/guides/${o.slug}/`)}"><h3>${o.title}</h3><p>${o.summary}</p><span class="more">${icon("arrow")}</span></a>`)
+    ${kicker("اقرأ أيضًا")}
+    <div class="d-grid">${others
+      .map((o) => `<a class="g-card" href="${url(`/guides/${o.slug}/`)}" data-reveal><span class="g-meta">${icon("clock")} ${toArDigits(o.minutes)} دقائق قراءة</span><h3>${o.title}</h3><p>${o.summary}</p><span class="d-go">${icon("arrow")}</span></a>`)
       .join("")}</div>
   </div>
 </section>

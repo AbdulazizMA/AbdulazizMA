@@ -2,29 +2,30 @@
 import { mkdirSync, writeFileSync, rmSync, cpSync, existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { cfg, layout, abs, BASE, T } from "./src/lib.mjs";
+import { cfg, layout, abs, BASE, T, CITIES } from "./src/lib.mjs";
 import home from "./src/pages/home.mjs";
 import core from "./src/pages/core.mjs";
-import areas from "./src/pages/areas.mjs";
+import cities from "./src/pages/cities.mjs";
 import guides from "./src/pages/guides.mjs";
 import calculator from "./src/pages/calculator.mjs";
-import { AREAS } from "./src/pages/areas-data.mjs";
+import { DISTRICTS } from "./src/pages/cities-data.mjs";
 
 const root = dirname(fileURLToPath(import.meta.url));
 const out = join(root, "dist");
 const version = Date.now().toString(36);
 const today = new Date().toISOString().slice(0, 10);
 
-const pages = [home("ar"), home("en"), ...core(), ...areas(), ...guides(), ...calculator()];
+const pages = [home("ar"), home("en"), ...core(), ...cities(), ...guides(), ...calculator()];
 
 // hreflang alternates: pages sharing a `key` are translations of each other
 const byKey = {};
 for (const p of pages) (byKey[p.key] ||= {})[p.lang] = p.path;
 
-const footerAreas = {
-  ar: AREAS.map((a) => ({ name: a.name.ar, path: `/areas/${a.slug}/` })),
-  en: AREAS.map((a) => ({ name: a.name.en, path: `/en/areas/#${a.slug}` })),
-};
+const footerDistricts = (lang) =>
+  CITIES.map((c) => ({
+    name: T(lang, c),
+    items: DISTRICTS[c.slug].map((d) => ({ name: T(lang, d.name), path: lang === "ar" ? `/${c.slug}/${d.slug}/` : `/en/${c.slug}/#${d.slug}` })),
+  }));
 
 rmSync(out, { recursive: true, force: true });
 mkdirSync(out, { recursive: true });
@@ -33,9 +34,9 @@ const seen = new Set();
 for (const page of pages) {
   if (seen.has(page.path)) throw new Error(`Duplicate path ${page.path}`);
   seen.add(page.path);
-  if (page.title.length > 70 && !page.noindex) console.warn(`  ! long title (${page.title.length}): ${page.path}`);
+  if (page.title.length > 75 && !page.noindex) console.warn(`  ! long title (${page.title.length}): ${page.path}`);
   if (page.description.length > 170) console.warn(`  ! long description (${page.description.length}): ${page.path}`);
-  const html = layout(page, byKey[page.key], { version, areas: footerAreas[page.lang] });
+  const html = layout(page, byKey[page.key], { version, districts: footerDistricts(page.lang) });
   const file = page.file ? join(out, page.file) : join(out, page.path, "index.html");
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, html);

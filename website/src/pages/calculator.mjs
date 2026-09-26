@@ -1,4 +1,4 @@
-import { cfg, url, icon, faqBlock, faqSchema, ctaBand, agentId, esc, abs } from "../lib.mjs";
+import { cfg, url, icon, faqBlock, faqSchema, ctaBand, agentId, esc, abs, pageHero } from "../lib.mjs";
 
 const C = {
   ar: {
@@ -122,13 +122,8 @@ export default function calculator() {
     const num = (name, label, value, extra = "") =>
       `<label>${label}<input type="number" name="${name}" value="${value}" inputmode="decimal" min="0" ${extra} dir="ltr"></label>`;
     const out = (k, cls = "") => `<div class="out ${cls}"><span>${c.r[k]}</span><output data-k="${k}">—</output></div>`;
-    const body = `
-<section class="page-hero">
-  <div class="wrap narrow">
-    <h1>${c.h1}</h1>
-    <p class="lead">${c.lead}</p>
-  </div>
-</section>
+    const body = (crumbs) => `
+${pageHero(lang, { crumbs, kicker: lang === "ar" ? "أداة مجانية" : "Free tool", title: c.h1, lead: c.lead })}
 <section class="section section-tight">
   <div class="wrap calc" id="roi" data-lang="${lang}" data-wa="${esc(cfg.whatsapp)}" data-labels='${esc(JSON.stringify(c.r))}'>
     <form class="calc-form" onsubmit="return false">
@@ -163,12 +158,12 @@ export default function calculator() {
   </div>
 </section>
 <section class="section">
-  <div class="wrap narrow prose">
+  <div class="wrap"><div class="prose narrow">
     ${GUIDE[lang]}
     <h2>${lang === "ar" ? "أسئلة عن حساب العائد" : "Yield calculation FAQ"}</h2>
     ${faqBlock(FAQS[lang])}
     ${lang === "ar" ? `<p>اقرأ أيضًا: <a href="${url("/guides/how-to-calculate-rental-yield/")}">دليل حساب العائد الإيجاري بالتفصيل</a> و<a href="${url("/guides/property-buying-costs-saudi-arabia/")}">كل تكاليف شراء العقار في السعودية</a>.</p>` : ""}
-  </div>
+  </div></div>
 </section>
 ${ctaBand(lang, lang === "ar" ? "الأرقام مشجّعة؟ خلّني أتحقق منها." : "Numbers look good? Let me verify them.", lang === "ar" ? "أرسل لي تفاصيل العقار، وأراجع الإيجار والتكاليف والسعر مقابل صفقات فعلية في نفس الحي." : "Send me the property details and I'll check the rent, costs and price against actual transactions in the same district.")}`;
     return {

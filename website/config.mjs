@@ -1,69 +1,72 @@
 // ============================================================================
-//  SITE CONFIG — the ONLY file you need to edit with your personal details.
-//  Anything marked  TODO  is a placeholder. Replace it, then run:  npm run build
+//  SITE CONFIG: the ONLY file you need to edit with your personal details.
+//  Anything marked  TODO  is still missing. Replace it, then run:  node build.mjs
 // ============================================================================
 
 export default {
   // --- Domain ---------------------------------------------------------------
-  // Final public URL, no trailing slash. When you buy a domain (recommended),
-  // put it here, e.g. "https://abdulaziz-realestate.sa" and set `customDomain`.
+  // Final public URL, no trailing slash. When you buy a domain, put it in
+  // `customDomain` (e.g. "alkuthami.sa") and it takes over automatically.
   siteUrl: "https://abdulazizma.github.io/AbdulazizMA",
-  customDomain: "", // e.g. "abdulaziz-realestate.sa" -> writes a CNAME file
+  customDomain: "",
 
   // --- You ------------------------------------------------------------------
-  name: { ar: "عبدالعزيز", en: "Abdulaziz" }, // TODO: full name as on your FAL license
-  brand: { ar: "عبدالعزيز للاستثمار العقاري", en: "Abdulaziz Real Estate Advisory" }, // TODO
-  role: { ar: "وسيط عقاري مرخّص — ممثل المشتري المستثمر", en: "Licensed Buyer's Agent for Property Investors" },
-  // Optional personal story shown on the About page (2–4 sentences, first person).
-  // Real details (background, why you started, a deal you're proud of) build trust.
-  bio: { ar: "", en: "" }, // TODO
-  photo: "", // TODO: e.g. "assets/abdulaziz.jpg" (put the file in src/assets). Empty = monogram.
+  name: { ar: "عبدالعزيز القثامي", en: "Abdulaziz Alkuthami" }, // check the Arabic spelling
+  brand: { ar: "عبدالعزيز القثامي", en: "Abdulaziz Alkuthami" }, // personal brand = name on Google
+  role: { ar: "وسيط عقاري مرخّص للمستثمرين", en: "Licensed Buyer's Agent for Investors" },
+  // Optional short personal story for the About page (2–4 sentences, first person).
+  bio: { ar: "", en: "" },
+  photo: "", // e.g. "assets/abdulaziz.jpg" once you have one. Empty = typographic design.
 
-  // REGA (الهيئة العامة للعقار) FAL license. Displaying it is a legal
-  // requirement for brokerage advertising in KSA — and a huge trust signal.
-  falLicense: "0000000000", // TODO: your رخصة فال number
-  crNumber: "", // optional: commercial registration (السجل التجاري)
+  // REGA FAL license. Displaying it on brokerage advertising is a legal
+  // requirement, so fill it in before sharing the site publicly.
+  falLicense: "", // TODO: رقم رخصة فال
+  crNumber: "", // optional: السجل التجاري
+
+  // --- Fees -----------------------------------------------------------------
+  feePercent: 2.5, // % of the property price, paid by the client at closing
 
   // --- Contact --------------------------------------------------------------
-  phone: "+966500000000", // TODO: international format, no spaces
-  whatsapp: "966500000000", // TODO: digits only, with country code
-  email: "hello@example.com", // TODO
-  // Optional: a Formspree (free) endpoint so form leads also land in your email.
-  // Leave empty and the form sends the lead straight to your WhatsApp.
-  formEndpoint: "",
+  phone: "+966561056054",
+  whatsapp: "966561056054",
+  email: "", // optional: shown in the footer/contact page when set
+  formEndpoint: "", // optional Formspree endpoint: form leads also land in email
 
-  // --- Market ---------------------------------------------------------------
-  city: { ar: "الرياض", en: "Riyadh" }, // TODO if you work in another city
-  region: { ar: "منطقة الرياض", en: "Riyadh Province" },
-  address: {
-    street: "", // optional office address; leave empty if you work without an office
-    district: { ar: "", en: "" },
-    postalCode: "",
-  },
-  geo: { lat: 24.7136, lng: 46.6753 }, // city center; set to your office if you have one
-  hours: "Su-Th 09:00-21:00, Sa 16:00-21:00", // schema.org openingHours format
+  // --- Markets (first one = primary base in Google data) ---------------------
+  cities: [
+    {
+      slug: "riyadh",
+      ar: "الرياض",
+      en: "Riyadh",
+      region: { ar: "منطقة الرياض", en: "Riyadh Province" },
+      regionCode: "SA-01",
+      geo: { lat: 24.7136, lng: 46.6753 },
+    },
+    {
+      slug: "jeddah",
+      ar: "جدة",
+      en: "Jeddah",
+      region: { ar: "منطقة مكة المكرمة", en: "Makkah Province" },
+      regionCode: "SA-02",
+      geo: { lat: 21.5433, lng: 39.1728 },
+    },
+  ],
+  hours: "Su-Th 09:00-21:00, Sa 16:00-21:00",
 
-  // --- Proof (NEVER invent these — leave empty until real) --------------------
-  // Each: { value: "35+", label: { ar: "...", en: "..." } }
+  // --- Proof (NEVER invent these; they stay hidden until real) ---------------
+  // { value: "35+", label: { ar: "صفقة", en: "deals" } }
   stats: [],
-  // Each: { name: "أبو محمد", quote: { ar: "...", en: "..." }, detail: { ar: "مستثمر — فيلا في النرجس", en: "..." } }
+  // { name: "أبو محمد", quote: { ar: "...", en: "..." }, detail: { ar: "مستثمر — عمارة في الياسمين", en: "..." } }
   testimonials: [],
-  yearsExperience: 0, // TODO: 0 hides it
+  yearsExperience: 0,
 
   // --- Links ----------------------------------------------------------------
-  googleBusinessProfileUrl: "", // TODO after creating your Google Business Profile
-  googleReviewUrl: "", // the "ask for review" short link from Google Business Profile
-  social: {
-    x: "", // e.g. "https://x.com/yourhandle"
-    instagram: "",
-    snapchat: "",
-    tiktok: "",
-    linkedin: "",
-    youtube: "",
-  },
+  googleBusinessProfileUrl: "",
+  googleReviewUrl: "",
+  social: { x: "", instagram: "", snapchat: "", tiktok: "", linkedin: "", youtube: "" },
 
-  // --- Analytics / verification (all free, all optional) ---------------------
-  googleSiteVerification: "", // Google Search Console "HTML tag" content value
+  // --- Analytics / verification (free, optional) -----------------------------
+  googleSiteVerification: "",
   bingSiteVerification: "",
-  ga4Id: "", // e.g. "G-XXXXXXX"
+  ga4Id: "",
 };

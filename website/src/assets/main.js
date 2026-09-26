@@ -11,6 +11,39 @@
     });
   }
 
+  // Reveal-on-scroll (content is visible without JS; this only animates)
+  const revealEls = document.querySelectorAll("[data-reveal]");
+  if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); } }),
+      { rootMargin: "0px 0px -8% 0px" }
+    );
+    revealEls.forEach((el, i) => { el.style.transitionDelay = `${(i % 3) * 70}ms`; io.observe(el); });
+  } else {
+    revealEls.forEach((el) => el.classList.add("is-in"));
+  }
+
+  // Hero "reality check": advertised vs real yield
+  const rc = document.getElementById("reality");
+  if (rc) {
+    const fmt = (n) => {
+      if (!isFinite(n) || n <= 0) return "—";
+      return n.toFixed(1) + "%";
+    };
+    const upd = () => {
+      const price = parseFloat(rc.elements.price.value) || 0;
+      const rent = parseFloat(rc.elements.rent.value) || 0;
+      const gross = price ? (rent / price) * 100 : 0;
+      const net = price ? ((rent * 0.85) / (price * 1.07875)) * 100 : 0;
+      rc.querySelector('[data-rc="gross"]').value = fmt(gross);
+      rc.querySelector('[data-rc="net"]').value = fmt(net);
+      const max = Math.max(gross, 0.0001);
+      rc.querySelector('[data-bar="gross"]').style.width = gross > 0 ? "100%" : "0";
+      rc.querySelector('[data-bar="net"]').style.width = `${Math.max(0, Math.min(100, (net / max) * 100))}%`;
+    };
+    rc.addEventListener("input", upd);
+  }
+
   // Conversion tracking (only if GA4 is configured)
   document.addEventListener("click", (e) => {
     const a = e.target.closest("[data-track]");
@@ -40,12 +73,13 @@
 
       const types = fd.getAll("type").join("، ") || "—";
       const L = ar
-        ? ["طلب استثماري جديد من الموقع", "الاسم", "الجوال", "الهدف", "نوع العقار", "الميزانية", "طريقة الشراء", "التوقيت", "الأحياء", "ملاحظات"]
-        : ["New investment brief from website", "Name", "Mobile", "Goal", "Property type", "Budget", "Payment", "Timing", "Areas", "Notes"];
+        ? ["طلب استثماري جديد من الموقع", "الاسم", "الجوال", "الهدف", "نوع العقار", "الميزانية", "طريقة الشراء", "التوقيت", "الأحياء", "ملاحظات", "المدينة"]
+        : ["New investment brief from website", "Name", "Mobile", "Goal", "Property type", "Budget", "Payment", "Timing", "Areas", "Notes", "City"];
       const lines = [
         `*${L[0]}*`,
         `${L[1]}: ${fd.get("name")}`,
         `${L[2]}: ${fd.get("phone")}`,
+        `${L[10]}: ${fd.get("city") || "—"}`,
         `${L[3]}: ${fd.get("goal") || "—"}`,
         `${L[4]}: ${types}`,
         `${L[5]}: ${fd.get("budget")}`,

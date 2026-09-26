@@ -65,9 +65,9 @@ Searches like "وسيط عقاري الرياض" show three kinds of results. Yo
 ### 3.1 Setup
 
 - Go to **business.google.com**, then Add business.
-- **Name:** your real brand name exactly (for example "عبدالعزيز للاستثمار العقاري"). **Never** stuff keywords like "Best Realtor Riyadh". Google suspends profiles for it.
+- **Name:** exactly **"عبدالعزيز القثامي"**, matching the website and your FAL license. **Never** stuff keywords like "Best Realtor Riyadh". Google suspends profiles for it.
 - **Primary category:** *Real estate agent* (وكيل عقارات). **Secondary:** *Real estate consultant*.
-- **Location:** if you have no office clients visit, choose **service-area business**, hide the address, and add the districts and cities you serve.
+- **Location:** if you have no office clients visit, choose **service-area business**, hide the address, and add **both Riyadh and Jeddah** as service areas. Google allows one profile per real business, so don't create a second fake "Jeddah office". If you later open a real office in one city, verify that address.
 - **Phone:** your WhatsApp number. **Website:** your domain.
 - **Hours:** real hours. Accurate hours matter for ranking.
 - **Services:** add each service from the Services page, one entry each.
@@ -75,10 +75,10 @@ Searches like "وسيط عقاري الرياض" show three kinds of results. Yo
 ### 3.2 Description (ready to paste, 750 characters max)
 
 ```
-وسيط عقاري مرخّص من الهيئة العامة للعقار (رخصة فال رقم ______) في الرياض، أمثّل المستثمر لا البائع.
+وسيط عقاري مرخّص من الهيئة العامة للعقار (رخصة فال رقم ______) في الرياض وجدة، أمثّل المستثمر لا البائع.
 أساعد المستثمرين المحليين على شراء العقار الصحيح بالسعر الصحيح: عمائر مدرّة للدخل، أراضٍ للاستثمار، فلل ودبلكسات، ومشاريع على الخارطة.
 لكل عقار أرشّحه ملف تحليل مكتوب: مقارنة بصفقات مسجّلة، التكاليف الكاملة (ضريبة التصرفات والسعي)، العائد الصافي، والمخاطر — مع توصية واضحة: اشترِ، فاوض، أو اترك.
-أتفاوض نيابة عنك وأتابع حتى الإفراغ. عقد وساطة موثّق وأتعاب واضحة مسبقًا.
+أتفاوض نيابة عنك وأتابع حتى الإفراغ. عقد وساطة موثّق، وأتعاب ٢٫٥٪ من قيمة العقار تُستحق عند الإفراغ فقط.
 الاستشارة الأولى مجانية.
 ```
 
@@ -113,11 +113,14 @@ Rules:
 
 | Search (Arabic) | Target page |
 |---|---|
-| وسيط عقاري الرياض · مسوق عقاري الرياض · وسيط عقاري مرخص | Home |
+| وسيط عقاري مرخص · وسيط عقاري للمستثمرين | Home |
+| وسيط عقاري الرياض · مسوق عقاري الرياض · مكتب عقار الرياض | `/riyadh/` |
+| وسيط عقاري جدة · مسوق عقاري جدة · مكتب عقار جدة | `/jeddah/` |
+| كم عمولة الوسيط العقاري · السعي كم نسبة | `/how-it-works/` + city pages (FAQ) |
 | وسيط عقاري للمستثمرين · شراء عقار استثماري الرياض | Home / Services |
 | عمائر للبيع الرياض استثمار · شراء عمارة مؤجرة | Services (#income) |
 | أراضي للاستثمار الرياض | Services (#land) + Al Arid page |
-| الاستثمار العقاري في حي [X] · [X] للاستثمار | `/areas/[x]/` |
+| الاستثمار العقاري في حي [X] · [X] للاستثمار | `/riyadh/[x]/` or `/jeddah/[x]/` |
 | حاسبة العائد الإيجاري · حساب العائد على العقار | Calculator + yield guide |
 | تكاليف شراء عقار · ضريبة التصرفات العقارية كم | Costs guide |
 | كيف اتحقق من صك العقار · قبل شراء عقار | Due-diligence guide |
@@ -157,7 +160,12 @@ Each article must answer **one** investor question better than anything else on 
 23. الوكالة الإلكترونية لشراء العقار: خطوة بخطوة
 24. تقرير ربعي: ماذا حدث في سوق الرياض هذا الربع؟ (recurring, and very linkable)
 
-**Also add district pages** for every district where you actually do deals, such as الصحافة, الربيع, القيروان, العليا, الندى, الملقا التجاري, المونسية and قرطبة. Each one needs genuinely different local insight.
+**Also add district pages** for every district where you actually do deals. Each one needs genuinely different local insight. Candidates:
+
+- **Riyadh:** الصحافة, الربيع, القيروان, العليا, الندى, المونسية, قرطبة
+- **Jeddah:** السلامة, الخالدية, النعيم, الروضة, البساتين, الفيصلية, المرجان, أبحر الجنوبية
+
+Also write two Jeddah-specific guides: **"التأجير قصير المدى في جدة: هل هو مجدٍ؟"** and **"شراء عقار قريب من البحر: ما الذي تفحصه؟"**
 
 **Repurpose every article** into:
 
@@ -177,9 +185,9 @@ Most of your leads will arrive on WhatsApp. Handle them like a system.
 - **Speed:** reply within **5 minutes** during working hours. Response speed is the biggest single conversion factor.
 - **Greeting message** (auto):
   ```
-  أهلًا وسهلًا 👋 معك عبدالعزيز، وسيط عقاري مرخّص (فال ______).
+  أهلًا وسهلًا 👋 معك عبدالعزيز القثامي، وسيط عقاري مرخّص (فال ______).
   عشان أخدمك بشكل صحيح، أرسل لي باختصار:
-  ١) هدفك: دخل شهري أم نمو؟  ٢) الميزانية التقريبية  ٣) الأحياء المفضّلة  ٤) كاش أم تمويل؟
+  ١) المدينة: الرياض أم جدة؟  ٢) هدفك: دخل شهري أم نمو؟  ٣) الميزانية التقريبية  ٤) كاش أم تمويل؟
   وأرد عليك في أقرب وقت.
   ```
 - **Away message:** state your working hours and point to the calculator link.

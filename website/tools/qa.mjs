@@ -36,6 +36,7 @@ await p.click("#brief button[type=submit]");
 console.log("empty submit opened:", opened);
 await p.fill('[name="name"]', "Test");
 await p.fill('[name="phone"]', "0500000000");
+await p.click('fieldset:has(legend:has-text("المدينة")) label.chip:has-text("جدة")');
 await p.click('label.chip:has-text("دخل شهري")');
 await p.click('label.chip:has-text("عمارة")');
 await p.selectOption('[name="budget"]', { index: 3 });
@@ -44,5 +45,10 @@ await p.click('label.chip:has-text("كاش")');
 await p.click("#brief button[type=submit]");
 await p.waitForTimeout(300);
 console.log("form wa:", opened && decodeURIComponent(opened.split("text=")[1]));
+// hero reality widget
+await p.goto(base + "/");
+await p.fill('#reality [name="price"]', "2000000");
+await p.fill('#reality [name="rent"]', "180000");
+console.log("reality:", await p.$$eval("#reality output", (os) => os.map((o) => o.value)));
 await b.close();
 console.log("page errors:", errors);
