@@ -1,0 +1,93 @@
+{
+  "_help": "Edit this file, then run: node site/build.js   — Any value that still contains TODO is printed as a warning when you build. Text fields have an English (en) and Arabic (ar) version.",
+
+  "siteUrl": "https://abdulazizma.github.io/AbdulazizMA",
+  "customDomain": "",
+
+  "brand": {
+    "en": "Makkah Family Apartments",
+    "ar": "شقق مكة العائلية"
+  },
+
+  "tourismLicense": "TODO: Ministry of Tourism license number",
+
+  "contact": {
+    "whatsapp": "TODO: 9665XXXXXXXX (country code, no + or spaces)",
+    "email": "TODO: your@email.com",
+    "phone": "TODO: +966 5X XXX XXXX"
+  },
+
+  "location": {
+    "neighborhood": { "en": "TODO: Al Aziziyah", "ar": "TODO: العزيزية" },
+    "street": { "en": "TODO: street name", "ar": "TODO: اسم الشارع" },
+    "postalCode": "TODO",
+    "lat": "TODO: building latitude, e.g. 21.4000",
+    "lng": "TODO: building longitude, e.g. 39.8500",
+    "mapsLink": "TODO: Google Maps share link of the building",
+    "distances": [
+      { "place": { "en": "Al-Masjid Al-Haram", "ar": "المسجد الحرام" }, "value": { "en": "TODO: 10 min by car", "ar": "TODO: ١٠ دقائق بالسيارة" } },
+      { "place": { "en": "Nearest bus / shuttle stop to the Haram", "ar": "أقرب محطة حافلات إلى الحرم" }, "value": { "en": "TODO: 3 min walk", "ar": "TODO: ٣ دقائق مشياً" } },
+      { "place": { "en": "Supermarket & restaurants", "ar": "سوبرماركت ومطاعم" }, "value": { "en": "TODO: 2 min walk", "ar": "TODO: دقيقتان مشياً" } },
+      { "place": { "en": "Haramain Train Station (Makkah)", "ar": "محطة قطار الحرمين (مكة)" }, "value": { "en": "TODO: 15 min by car", "ar": "TODO: ١٥ دقيقة بالسيارة" } },
+      { "place": { "en": "King Abdulaziz Airport, Jeddah", "ar": "مطار الملك عبدالعزيز، جدة" }, "value": { "en": "TODO: 75 min by car", "ar": "TODO: ٧٥ دقيقة بالسيارة" } }
+    ]
+  },
+
+  "apartment": {
+    "guests": "TODO: 6",
+    "bedrooms": "TODO: 2",
+    "beds": "TODO: 4",
+    "bathrooms": "TODO: 2",
+    "sizeSqm": "TODO: 90",
+    "checkIn": { "en": "From 4:00 PM (self check-in)", "ar": "من ٤:٠٠ مساءً (دخول ذاتي)" },
+    "checkOut": { "en": "Until 12:00 PM", "ar": "حتى ١٢:٠٠ ظهراً" },
+    "layout": {
+      "en": "TODO: Describe the layout, e.g. Each apartment has a spacious living room with a sofa bed, a master bedroom with a king bed, a second bedroom with two single beds, a fully equipped kitchen and two bathrooms.",
+      "ar": "TODO: صف تصميم الشقة، مثال: تتكون كل شقة من صالة واسعة مع كنبة سرير، وغرفة نوم رئيسية بسرير كبير، وغرفة نوم ثانية بسريرين مفردين، ومطبخ مجهز بالكامل، ودورتي مياه."
+    }
+  },
+
+  "_amenitiesHelp": "Delete any amenity that is NOT in your apartments. Icon options: wifi, ac, kitchen, washer, tv, key, bed, parking, elevator, coffee, prayer, clean",
+  "amenities": [
+    { "icon": "wifi", "en": "Fast Wi‑Fi", "ar": "واي فاي سريع" },
+    { "icon": "ac", "en": "Air conditioning in every room", "ar": "تكييف في جميع الغرف" },
+    { "icon": "kitchen", "en": "Fully equipped kitchen", "ar": "مطبخ مجهز بالكامل" },
+    { "icon": "washer", "en": "Washing machine", "ar": "غسالة ملابس" },
+    { "icon": "tv", "en": "Smart TV", "ar": "تلفزيون ذكي" },
+    { "icon": "key", "en": "Self check‑in", "ar": "دخول ذاتي" },
+    { "icon": "bed", "en": "Fresh linen & towels", "ar": "مفارش ومناشف نظيفة" },
+    { "icon": "elevator", "en": "Elevator", "ar": "مصعد" },
+    { "icon": "parking", "en": "Parking", "ar": "موقف سيارات" },
+    { "icon": "prayer", "en": "Prayer mats & Qibla direction", "ar": "سجادات صلاة واتجاه القبلة" },
+    { "icon": "coffee", "en": "Coffee & tea corner", "ar": "ركن القهوة والشاي" },
+    { "icon": "clean", "en": "Professionally cleaned", "ar": "تنظيف احترافي" }
+  ],
+
+  "_unitsHelp": "One entry per apartment. Paste the full Airbnb room link (https://www.airbnb.com/rooms/123456) and Booking.com link. Leave booking empty if a unit is not on Booking.com.",
+  "units": [
+    { "name": { "en": "Apartment 1", "ar": "الشقة ١" }, "airbnb": "TODO", "booking": "" },
+    { "name": { "en": "Apartment 2", "ar": "الشقة ٢" }, "airbnb": "TODO", "booking": "" },
+    { "name": { "en": "Apartment 3", "ar": "الشقة ٣" }, "airbnb": "TODO", "booking": "" },
+    { "name": { "en": "Apartment 4", "ar": "الشقة ٤" }, "airbnb": "TODO", "booking": "" }
+  ],
+
+  "_galleryHelp": "Put photos in docs/images/ with these file names (JPG or WebP, about 1600px wide). The first one is the big cover photo. Missing photos show a placeholder.",
+  "gallery": [
+    { "file": "living-room.jpg", "en": "Bright living room with comfortable seating", "ar": "صالة مشرقة بجلسات مريحة" },
+    { "file": "master-bedroom.jpg", "en": "Master bedroom with king‑size bed", "ar": "غرفة النوم الرئيسية بسرير كبير" },
+    { "file": "second-bedroom.jpg", "en": "Second bedroom with single beds", "ar": "غرفة النوم الثانية بأسرّة مفردة" },
+    { "file": "kitchen.jpg", "en": "Fully equipped kitchen", "ar": "مطبخ مجهز بالكامل" },
+    { "file": "dining.jpg", "en": "Dining area for the whole family", "ar": "منطقة طعام تتسع للعائلة" },
+    { "file": "bathroom.jpg", "en": "Clean, modern bathroom", "ar": "دورة مياه حديثة ونظيفة" },
+    { "file": "view.jpg", "en": "View from the apartment", "ar": "الإطلالة من الشقة" },
+    { "file": "building.jpg", "en": "Building entrance", "ar": "مدخل العمارة" }
+  ],
+
+  "_reviewsHelp": "Copy REAL reviews from your Airbnb/Booking pages here (never invent reviews). The section stays hidden while this list is empty.",
+  "rating": { "value": "", "count": "", "source": "Airbnb" },
+  "reviews": [],
+
+  "_analyticsHelp": "Optional: your Google Analytics 4 measurement ID (G-XXXXXXX) and Google Search Console verification code.",
+  "googleAnalyticsId": "",
+  "googleSiteVerification": ""
+}
